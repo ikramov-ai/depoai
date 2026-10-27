@@ -2,244 +2,196 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#102747" />
-  <title>DepoAI — Deposit Intelligence</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DepoAI — Dashboard</title>
   <style>
-    :root {
-      --navy: #102747;
-      --blue: #2563eb;
-      --muted: #66758b;
-      --line: #e2e8f0;
-      --bg: #f4f7fb;
-    }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-      background: var(--bg);
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
       color: #172b46;
     }
     header {
-      background: var(--navy);
+      background: #102747;
       color: white;
-      padding: 18px 6%;
+      padding: 20px 6%;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      align-items: center;
     }
-    .brand { font-size: 23px; font-weight: 800; letter-spacing: -.7px; }
-    .brand span { color: #76a8ff; }
-    .status { font-size: 12px; color: #d5e4ff; }
-    .status i {
-      display: inline-block; width: 8px; height: 8px;
-      border-radius: 50%; background: #4ade80; margin-right: 7px;
+    .brand { font-size: 25px; font-weight: 800; }
+    .brand span { color: #78aaff; }
+    nav a {
+      color: #e0eaff;
+      text-decoration: none;
+      margin-left: 22px;
+      font-size: 14px;
     }
-    main { max-width: 1100px; margin: 38px auto; padding: 0 20px 50px; }
-    .hero { margin-bottom: 26px; }
+    main { max-width: 1100px; margin: 38px auto; padding: 0 20px; }
     .eyebrow {
-      color: var(--blue); font-size: 12px; font-weight: 800;
-      letter-spacing: 1.5px; text-transform: uppercase;
+      color: #2563eb;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
     }
-    h1 { font-size: clamp(30px, 5vw, 43px); margin: 10px 0; letter-spacing: -1.5px; }
-    .subtitle { color: var(--muted); line-height: 1.7; max-width: 650px; }
-    .layout {
-      display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(260px, .8fr);
-      gap: 22px; align-items: start;
+    h1 { font-size: clamp(30px, 5vw, 42px); margin: 12px 0; }
+    .sub { color: #66758b; line-height: 1.7; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin: 28px 0;
     }
-    .card {
-      background: white; border: 1px solid var(--line); border-radius: 18px;
-      padding: 25px; box-shadow: 0 8px 30px rgba(16,39,71,.04);
+    .card, .panel {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 23px;
     }
-    .card h2 { margin: 0 0 5px; font-size: 19px; }
-    .hint { margin: 0 0 22px; font-size: 13px; color: var(--muted); }
-    .fields {
-      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px;
+    .label { color: #66758b; font-size: 13px; }
+    .value { font-size: 29px; font-weight: 800; margin: 12px 0 7px; }
+    .small { color: #75849a; font-size: 12px; }
+    .bars {
+      display: flex;
+      align-items: end;
+      gap: 12px;
+      height: 150px;
+      margin-top: 25px;
+      border-bottom: 1px solid #dbe3ef;
     }
-    label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 7px; color: #40516a; }
-    input, select {
-      width: 100%; height: 44px; border: 1px solid #d8e0eb; border-radius: 9px;
-      padding: 0 11px; background: #fff; color: #172b46; font: inherit; font-size: 14px;
-      outline: none;
+    .bar {
+      flex: 1;
+      background: #3478ed;
+      border-radius: 7px 7px 0 0;
+      min-height: 8px;
     }
-    input:focus, select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px #2563eb18; }
-    button {
-      border: 0; width: 100%; margin-top: 23px; min-height: 48px;
-      border-radius: 10px; background: var(--blue); color: white;
-      font-size: 15px; font-weight: 750; cursor: pointer;
+    .bar:nth-child(even) { background: #9bbcf8; }
+    .bar-labels {
+      display: flex;
+      justify-content: space-around;
+      color: #75849a;
+      font-size: 12px;
+      margin-top: 10px;
     }
-    button:hover { background: #1d4ed8; }
-    button:disabled { opacity: .65; cursor: wait; }
-    .result-card { background: var(--navy); color: white; }
-    .result-card h2 { margin-bottom: 8px; }
-    .result-card p { color: #c2d1e5; line-height: 1.6; font-size: 13px; }
-    .result-box {
-      margin-top: 24px; padding: 18px; border-radius: 12px;
-      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+    .cta {
+      display: inline-block;
+      margin-top: 18px;
+      background: #2563eb;
+      color: white;
+      padding: 13px 19px;
+      border-radius: 9px;
+      text-decoration: none;
+      font-weight: bold;
     }
-    .result-label { font-size: 12px; color: #c2d1e5; }
-    .percent { font-size: 42px; font-weight: 800; margin: 7px 0 12px; }
-    .track { height: 8px; border-radius: 10px; background: #40516a; overflow: hidden; }
-    .fill { height: 100%; width: 0%; background: #72a7ff; transition: width .35s; }
-    #resultText { margin-top: 14px; font-size: 14px; color: white; font-weight: 650; }
-    #message { font-size: 13px; line-height: 1.6; overflow-wrap: anywhere; }
-    .note { font-size: 11px !important; color: #aebfd5 !important; margin-top: 18px; }
-    footer { text-align: center; color: #77859a; font-size: 12px; padding: 22px; }
-    @media (max-width: 760px) {
-      .layout { grid-template-columns: 1fr; }
-      .fields { grid-template-columns: 1fr; }
-      main { margin-top: 25px; padding-inline: 14px; }
-      .card { padding: 19px; }
+    .notice {
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 10px;
+      background: #edf4ff;
+      color: #29476f;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #75849a;
+      font-size: 13px;
+    }
+    @media(max-width: 700px) {
+      header { padding: 18px; align-items: flex-start; gap: 15px; flex-direction: column; }
+      nav a { margin: 0 16px 0 0; }
+      main { padding: 0 14px; margin-top: 25px; }
+      .cards { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <header>
     <div class="brand">Depo<span>AI</span></div>
-    <div class="status"><i></i>ML API connected</div>
+    <nav>
+      <a href="./index.html">Dashboard</a>
+      <a href="./prediction.html">Prediction ↗</a>
+    </nav>
   </header>
 
   <main>
-    <section class="hero">
-      <div class="eyebrow">Deposit intelligence platform</div>
-      <h1>Smarter deposit decisions.</h1>
-      <p class="subtitle">
-        Mijoz ma’lumotlarini kiriting va Machine Learning modeli yordamida
-        muddatli depozitga rozilik ehtimolini baholang.
-      </p>
+    <div class="eyebrow">DEPOSIT INTELLIGENCE PLATFORM</div>
+    <h1>Dashboard overview</h1>
+    <p class="sub">
+      Bank depozitlari bo‘yicha Machine Learning loyihangizning boshqaruv paneli.
+    </p>
+
+    <section class="cards">
+      <div class="card">
+        <div class="label">Backend API</div>
+        <div class="value" id="apiStatus">Tekshirilmoqda...</div>
+        <div class="small">DepoAI model serveri</div>
+      </div>
+      <div class="card">
+        <div class="label">Joriy sessiyadagi bashoratlar</div>
+        <div class="value" id="count">0</div>
+        <div class="small">Ushbu brauzer sessiyasi</div>
+      </div>
+      <div class="card">
+        <div class="label">Oxirgi bashorat</div>
+        <div class="value" id="lastResult">—</div>
+        <div class="small">Prediction sahifasidan natija oling</div>
+      </div>
     </section>
 
-    <div class="layout">
-      <section class="card">
-        <h2>Mijoz ma’lumotlari</h2>
-        <p class="hint">Barcha maydonlarni to‘ldiring.</p>
-
-        <form id="customerForm">
-          <div class="fields">
-            <div><label for="age">Yosh</label><input id="age" name="age" type="number" min="18" max="100" value="35" required /></div>
-            <div><label for="job">Kasbi</label>
-              <select id="job" name="job">
-                <option value="management">Management</option><option value="admin.">Admin</option>
-                <option value="blue-collar">Blue-collar</option><option value="entrepreneur">Entrepreneur</option>
-                <option value="housemaid">Housemaid</option><option value="services">Services</option>
-                <option value="retired">Retired</option><option value="self-employed">Self-employed</option>
-                <option value="student">Student</option><option value="technician">Technician</option>
-                <option value="unemployed">Unemployed</option><option value="unknown">Unknown</option>
-              </select>
-            </div>
-            <div><label for="marital">Oilaviy holati</label>
-              <select id="marital" name="marital"><option value="married">Married</option><option value="single">Single</option><option value="divorced">Divorced</option></select>
-            </div>
-            <div><label for="education">Ta’lim darajasi</label>
-              <select id="education" name="education"><option value="tertiary">Tertiary</option><option value="secondary">Secondary</option><option value="primary">Primary</option><option value="unknown">Unknown</option></select>
-            </div>
-            <div><label for="default">Kredit defolti</label>
-              <select id="default" name="default"><option value="no">No</option><option value="yes">Yes</option></select>
-            </div>
-            <div><label for="balance">Hisob balansi</label><input id="balance" name="balance" type="number" value="1200" required /></div>
-            <div><label for="housing">Uy krediti</label>
-              <select id="housing" name="housing"><option value="yes">Yes</option><option value="no">No</option></select>
-            </div>
-            <div><label for="loan">Shaxsiy kredit</label>
-              <select id="loan" name="loan"><option value="no">No</option><option value="yes">Yes</option></select>
-            </div>
-            <div><label for="contact">Aloqa turi</label>
-              <select id="contact" name="contact"><option value="cellular">Cellular</option><option value="telephone">Telephone</option><option value="unknown">Unknown</option></select>
-            </div>
-            <div><label for="day">Aloqa kuni (1–31)</label><input id="day" name="day" type="number" min="1" max="31" value="15" required /></div>
-            <div><label for="month">Oy</label>
-              <select id="month" name="month">
-                <option value="may">May</option><option value="jan">January</option><option value="feb">February</option>
-                <option value="mar">March</option><option value="apr">April</option><option value="jun">June</option>
-                <option value="jul">July</option><option value="aug">August</option><option value="sep">September</option>
-                <option value="oct">October</option><option value="nov">November</option><option value="dec">December</option>
-              </select>
-            </div>
-            <div><label for="campaign">Joriy kampaniyadagi urinishlar</label><input id="campaign" name="campaign" type="number" min="1" value="1" required /></div>
-            <div><label for="pdays">Oldingi aloqa (kun, -1 = yo‘q)</label><input id="pdays" name="pdays" type="number" min="-1" value="-1" required /></div>
-            <div><label for="previous">Oldingi urinishlar soni</label><input id="previous" name="previous" type="number" min="0" value="0" required /></div>
-            <div><label for="poutcome">Oldingi kampaniya natijasi</label>
-              <select id="poutcome" name="poutcome"><option value="unknown">Unknown</option><option value="success">Success</option><option value="failure">Failure</option><option value="other">Other</option></select>
-            </div>
-          </div>
-          <button id="submitBtn" type="submit">Bashorat qilish →</button>
-        </form>
-      </section>
-
-      <aside class="card result-card">
-        <h2>AI bashorati</h2>
-        <p>Natija siz kiritgan ma’lumotlar asosida model tomonidan hisoblanadi.</p>
-        <div class="result-box" aria-live="polite">
-          <div class="result-label">Rozilik ehtimoli</div>
-          <div class="percent" id="percent">—%</div>
-          <div class="track"><div class="fill" id="fill"></div></div>
-          <div id="resultText">Bashorat qilish uchun formani yuboring.</div>
-          <p id="message">Natija shu yerda ko‘rsatiladi.</p>
-        </div>
-        <p class="note">Eslatma: bu statistik model bashorati, moliyaviy kafolat emas. Natijadan foydalanishda inson nazorati va adolatli qaror qabul qilish tamoyillariga rioya qiling.</p>
-      </aside>
-    </div>
+    <section class="panel">
+      <h2>DepoAI analytics</h2>
+      <p class="sub">
+        Quyidagi grafik — dizayn namunasi, haqiqiy dataset statistikasi emas.
+      </p>
+      <div class="bars" aria-label="Dekorativ grafik">
+        <div class="bar" style="height:35%"></div>
+        <div class="bar" style="height:58%"></div>
+        <div class="bar" style="height:44%"></div>
+        <div class="bar" style="height:76%"></div>
+        <div class="bar" style="height:53%"></div>
+        <div class="bar" style="height:88%"></div>
+        <div class="bar" style="height:66%"></div>
+      </div>
+      <div class="bar-labels">
+        <span>Dush</span><span>Sesh</span><span>Chor</span>
+        <span>Pay</span><span>Jum</span><span>Shan</span><span>Yak</span>
+      </div>
+      <a class="cta" href="./prediction.html">Yangi bashorat qilish →</a>
+      <div class="notice">
+        Eslatma: bashoratlar hisoblagichi brauzer sessiyasini ko‘rsatadi.
+        Grafik hozircha namunaviy; haqiqiy statistika emas.
+      </div>
+    </section>
   </main>
 
   <footer>DepoAI · Machine Learning for smarter banking</footer>
 
   <script>
-    const API_URL = "https://depoai.onrender.com/predict";
-    const form = document.getElementById("customerForm");
-    const button = document.getElementById("submitBtn");
-    const percent = document.getElementById("percent");
-    const fill = document.getElementById("fill");
-    const resultText = document.getElementById("resultText");
-    const message = document.getElementById("message");
+    const API = "https://depoai.onrender.com";
 
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      button.disabled = true;
-      button.textContent = "Hisoblanmoqda...";
-      resultText.textContent = "Model javobi kutilmoqda...";
-      message.textContent = "";
-      percent.textContent = "—%";
-      fill.style.width = "0%";
+    fetch(API + "/health")
+      .then(r => {
+        if (!r.ok) throw new Error("API xatosi");
+        return r.json();
+      })
+      .then(() => {
+        document.getElementById("apiStatus").textContent = "Online";
+        document.getElementById("apiStatus").style.color = "#15803d";
+      })
+      .catch(() => {
+        document.getElementById("apiStatus").textContent = "Offline";
+        document.getElementById("apiStatus").style.color = "#dc2626";
+      });
 
-      const data = Object.fromEntries(new FormData(form).entries());
-      ["age", "day", "campaign", "pdays", "previous"].forEach(k => data[k] = Number(data[k]));
-      data.balance = Number(data.balance);
+    document.getElementById("count").textContent =
+      sessionStorage.getItem("depoai_count") || "0";
 
-      try {
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "Accept": "application/json" },
-          body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-        if (!response.ok) {
-          const detail = Array.isArray(result.detail)
-            ? result.detail.map(e => e.msg).join(", ")
-            : (result.detail || "Server xatoligi");
-          throw new Error(detail);
-        }
-
-        if (typeof result.probability_yes === "number") {
-          const p = Math.max(0, Math.min(100, result.probability_yes));
-          percent.textContent = p.toFixed(1) + "%";
-          fill.style.width = p + "%";
-        } else {
-          percent.textContent = "—%";
-        }
-
-        resultText.textContent = result.label || (result.prediction === 1 ? "Rozilik bildirishi mumkin" : "Rozilik bildirmasligi mumkin");
-        message.textContent = "API javobi muvaffaqiyatli olindi.";
-      } catch (error) {
-        resultText.textContent = "Bashoratni olishning iloji bo‘lmadi.";
-        message.textContent = error.message + " — Internetni tekshirib, qayta urinib ko‘ring.";
-      } finally {
-        button.disabled = false;
-        button.textContent = "Bashorat qilish →";
-      }
-    });
+    document.getElementById("lastResult").textContent =
+      sessionStorage.getItem("depoai_last") || "—";
   </script>
 </body>
 </html>
