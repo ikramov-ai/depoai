@@ -232,6 +232,16 @@
 
         resultText.textContent = result.label || (result.prediction === 1 ? "Rozilik bildirishi mumkin" : "Rozilik bildirmasligi mumkin");
         message.textContent = "API javobi muvaffaqiyatli olindi.";
+        const count = Number(sessionStorage.getItem("depoai_count") || "0") + 1;
+
+sessionStorage.setItem("depoai_count", String(count));
+
+sessionStorage.setItem(
+  "depoai_last",
+  result.prediction === 1
+    ? "Rozilik mumkin"
+    : "Rozilik ehtimoli past"
+);
       } catch (error) {
         resultText.textContent = "Bashoratni olishning iloji bo‘lmadi.";
         message.textContent = error.message + " — Internetni tekshirib, qayta urinib ko‘ring.";
